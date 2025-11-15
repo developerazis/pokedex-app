@@ -5,21 +5,23 @@ import 'package:pokeapp/core/utils/string_extension.dart';
 
 class TypeChip extends StatelessWidget {
   final String type;
+  final Orientation orientation;
 
-  const TypeChip({super.key, required this.type});
+  const TypeChip({super.key, required this.type, this.orientation = Orientation.portrait,});
 
   @override
   Widget build(BuildContext context) {
+    double typeFontSize = orientation == Orientation.portrait ? 12.sp : 6.sp;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-      margin: EdgeInsets.only(right: 8.w),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
         color: setTypeColor(type),
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         type.titleCase(),
-        style: TextStyle(color: Colors.white, fontSize: 12.sp, fontWeight: FontWeight.w400),
+        style: TextStyle(color: Colors.white, fontSize: typeFontSize, fontWeight: FontWeight.w400),
       ),
     );
   }

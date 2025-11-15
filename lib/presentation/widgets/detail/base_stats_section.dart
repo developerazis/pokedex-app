@@ -26,38 +26,72 @@ class BaseStatsSection extends StatelessWidget {
   }
 }
 
-class _StatBar extends StatelessWidget {
+class _StatBar extends StatefulWidget {
   final String label;
   final int value;
 
   const _StatBar({required this.label, required this.value});
 
+  _StatBarState build(BuildContext context) {
+    return _StatBarState();
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _StatBarState();
+  }
+}
+
+class _StatBarState extends State<_StatBar> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: widget.value.toDouble())
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
           SizedBox(
-            width: 100.w,
-            child: Text(
-              label,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+            width: 100,
+            child: Text(widget.label, style: TextStyle(color: Colors.grey[600])),
           ),
           SizedBox(
-            width: 40.w,
+            width: 40,
             child: Text(
-              value.toString(),
+              widget.value.toString(),
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           Expanded(
-            child: LinearProgressIndicator(
-              value: value / 100,
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  value > 50 ? Colors.green : Colors.red),
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return LinearProgressIndicator(
+                  value: _animation.value / 100,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      widget.value > 50 ? Colors.green : Colors.red),
+                );
+              },
             ),
           ),
         ],

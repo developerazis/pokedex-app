@@ -25,6 +25,17 @@ class PokemonCard extends StatelessWidget {
           return Stack(
             children: [
               Positioned(
+                bottom: -constraints.maxHeight * 0.25,
+                right: -constraints.maxWidth * 0.08,
+                child: Image.asset(
+                  'assets/pokemon_ball.png',
+                  width: constraints.maxWidth * 0.65,
+                  height: constraints.maxHeight * 1.1,
+                  fit: BoxFit.contain,
+                  color: Colors.white.withOpacity(0.25),
+                ),
+              ),
+              Positioned(
                 bottom: -constraints.maxHeight * 0.1,
                 right: -constraints.maxWidth * 0.01,
                 child: Image.network(

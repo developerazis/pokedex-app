@@ -23,11 +23,11 @@ class DetailPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          getIt<SpeciesBloc>()..add(FetchSpecies(pokemon.id)),
+              getIt<SpeciesBloc>()..add(FetchSpecies(pokemon.id)),
         ),
         BlocProvider(
           create: (context) =>
-          getIt<EvolutionBloc>()..add(FetchEvolution(pokemon.id)),
+              getIt<EvolutionBloc>()..add(FetchEvolution(pokemon.id)),
         ),
       ],
       child: DetailView(pokemon: pokemon),
@@ -36,39 +36,105 @@ class DetailPage extends StatelessWidget {
 }
 
 class DetailView extends StatelessWidget {
-  const DetailView({super.key, required this.pokemon,});
+  const DetailView({super.key, required this.pokemon});
+
   final PokemonEntity pokemon;
 
   @override
   Widget build(BuildContext context) {
+    final color = setBackgroundColor(pokemon.types.first);
+
     return Scaffold(
-      backgroundColor: setBackgroundColor(pokemon.types.first),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        forceMaterialTransparency: true,
-        foregroundColor: Colors.white,
-      ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Column(
-            children: [
-              Flexible(
-                flex: 2,
-                child: PokemonDetailHeader(pokemon: pokemon),
-              ),
-              Flexible(
-                flex: 3,
-                child: PokemonInfoCard(pokemon: pokemon)
-              )
-            ],
+        backgroundColor: color,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          forceMaterialTransparency: true,
+          foregroundColor: Colors.white,
+        ),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.portrait) {
+              return _buildPortraitLayout();
+            } else {
+              return _buildLandscapeLayout();
+            }
+          },
+        ));
+  }
+
+  Widget _buildPortraitLayout() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(
+          top: 40.h,
+          right: -50.w,
+          child: Image.asset(
+            "assets/pokemon_ball.png",
+            fit: BoxFit.contain,
+            width: 250.w,
+            height: 250.h,
+            color: Colors.white.withOpacity(0.25),
           ),
-          Positioned(
-            top: 75.h,
-            child: PokemonImage(pokemon: pokemon),
+        ),
+        Column(
+          children: [
+            Flexible(
+              flex: 2,
+              child: PokemonDetailHeader(pokemon: pokemon),
+            ),
+            Flexible(flex: 3, child: PokemonInfoCard(pokemon: pokemon))
+          ],
+        ),
+        Positioned(
+          top: 75.h,
+          child: PokemonImage(pokemon: pokemon),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLandscapeLayout() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  right: -120,
+                  left: 0,
+                  child: Image.asset(
+                    "assets/pokemon_ball.png",
+                    fit: BoxFit.contain,
+                    width: 200.w,
+                    height: 200.h,
+                    color: Colors.white.withOpacity(0.25),
+                  ),
+                ),
+                PokemonDetailHeader(
+                  pokemon: pokemon,
+                  orientation: Orientation.landscape,
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: PokemonImage(
+                    pokemon: pokemon,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      )
+        ),
+        Expanded(
+          flex: 3,
+          child: PokemonInfoCard(pokemon: pokemon),
+        ),
+      ],
     );
   }
 }

@@ -64,7 +64,7 @@ class _InfoRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 100.w,
+            width: 100,
             child: Text(
               label,
               style: TextStyle(color: Colors.grey[600]),
