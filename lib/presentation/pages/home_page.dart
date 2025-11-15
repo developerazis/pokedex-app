@@ -49,12 +49,9 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokedex'),
-        centerTitle: true,
-        elevation: 8,
+        title: const Text('Pokedex', style: TextStyle(fontWeight: FontWeight.bold),),
         surfaceTintColor: Colors.white,
-        shadowColor: Colors.white,
-
+        backgroundColor: Colors.transparent,
       ),
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
@@ -77,6 +74,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               Expanded(
                 child: GridView.builder(
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(16.0),
                   controller: _scrollController,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:pokeapp/core/network/dio_client.dart';
 import 'package:pokeapp/data/datasources/remote/pokemon_remote_data_source.dart';
 import 'package:pokeapp/data/datasources/remote/pokemon_remote_data_source_impl.dart';
+import 'package:pokeapp/domain/entities/evolution_chain_entity.dart';
 import 'package:pokeapp/domain/entities/pokemon_entity.dart';
+import 'package:pokeapp/domain/entities/pokemon_species_entity.dart';
 import 'package:pokeapp/domain/repositories/pokemon_repository.dart';
 
 // This function will be executed in a separate isolate
@@ -12,12 +13,31 @@ Future<List<PokemonEntity>> _fetchPokemons(Map<String, int> params) async {
   final int limit = params['limit']!;
 
   // Create dependencies inside the isolate
-  final dio = DioClient.instance;
+  final dio = Dio(BaseOptions(baseUrl: 'https://pokeapi.co/api/v2/'));
   final remoteDataSource = PokemonRemoteDataSourceImpl(dio: dio);
 
   final futures = <Future<PokemonEntity>>[];
   for (int i = startId; i < startId + limit; i++) {
     futures.add(remoteDataSource.getPokemon(id: i).then((model) => model.toEntity()));
+  }
+
+  final pokemons = await Future.wait(futures);
+  return pokemons;
+}
+
+// This function will be executed in a separate isolate
+Future<List<PokemonEntity>> _fetchPokemonByNames(
+    Map<String, List<String>> params) async {
+  final List<String> names = params['names']!;
+
+  // Create dependencies inside the isolate
+  final dio = Dio(BaseOptions(baseUrl: 'https://pokeapi.co/api/v2/'));
+  final remoteDataSource = PokemonRemoteDataSourceImpl(dio: dio);
+
+  final futures = <Future<PokemonEntity>>[];
+  for (final name in names) {
+    futures.add(
+        remoteDataSource.getPokemonByName(name: name).then((model) => model.toEntity()));
   }
 
   final pokemons = await Future.wait(futures);
@@ -36,7 +56,26 @@ class PokemonRepositoryImpl implements PokemonRepository {
   }
 
   @override
-  Future<List<PokemonEntity>> getPokemons({required int startId, int limit = 20}) async {
+  Future<List<PokemonEntity>> getPokemonByNames(
+      {required List<String> names}) async {
+    return await compute(_fetchPokemonByNames, {'names': names});
+  }
+
+  @override
+  Future<List<PokemonEntity>> getPokemons(
+      {required int startId, int limit = 20}) async {
     return await compute(_fetchPokemons, {'startId': startId, 'limit': limit});
+  }
+
+  @override
+  Future<PokemonSpeciesEntity> getPokemonSpecies({required int id}) async {
+    final pokemonSpeciesModel = await remoteDataSource.getPokemonSpecies(id: id);
+    return pokemonSpeciesModel;
+  }
+
+  @override
+  Future<EvolutionChainEntity> getEvolutionChain({required int id}) async {
+    final evolutionChainModel = await remoteDataSource.getEvolutionChain(id: id);
+    return evolutionChainModel;
   }
 }
