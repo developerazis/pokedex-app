@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pokeapp/core/network/dio_client.dart';
 import 'package:pokeapp/data/datasources/remote/pokemon_remote_data_source.dart';
 import 'package:pokeapp/data/datasources/remote/pokemon_remote_data_source_impl.dart';
 import 'package:pokeapp/domain/entities/evolution_chain_entity.dart';
@@ -13,7 +14,7 @@ Future<List<PokemonEntity>> _fetchPokemons(Map<String, int> params) async {
   final int limit = params['limit']!;
 
   // Create dependencies inside the isolate
-  final dio = Dio(BaseOptions(baseUrl: 'https://pokeapi.co/api/v2/'));
+  final dio = DioClient.instance;
   final remoteDataSource = PokemonRemoteDataSourceImpl(dio: dio);
 
   final futures = <Future<PokemonEntity>>[];
@@ -31,7 +32,7 @@ Future<List<PokemonEntity>> _fetchPokemonByNames(
   final List<String> names = params['names']!;
 
   // Create dependencies inside the isolate
-  final dio = Dio(BaseOptions(baseUrl: 'https://pokeapi.co/api/v2/'));
+  final dio = DioClient.instance;
   final remoteDataSource = PokemonRemoteDataSourceImpl(dio: dio);
 
   final futures = <Future<PokemonEntity>>[];

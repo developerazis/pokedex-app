@@ -7,7 +7,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetPokemonsUseCase getPokemons;
   int _lastId = 1;
   final int _limit = 12;
-  final int _lastPage = 60;
+
+  // you cab change the last page number
+  final int _lastPage = 100;
   bool _isFetching = false;
 
   HomeBloc(this.getPokemons) : super(HomeInitial()) {
