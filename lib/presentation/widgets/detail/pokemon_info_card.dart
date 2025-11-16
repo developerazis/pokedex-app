@@ -13,42 +13,58 @@ class PokemonInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 25.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.r),
-          topRight: Radius.circular(30.r),
+    return OrientationBuilder(builder: (context, orientation) {
+      final isPortrait = orientation == Orientation.portrait;
+      return Container(
+        padding: EdgeInsets.only(top: isPortrait ? 25.h : 60.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: isPortrait
+              ? BorderRadius.only(
+                  topLeft: Radius.circular(30.r),
+                  topRight: Radius.circular(30.r),
+                )
+              : BorderRadius.only(
+                  topLeft: Radius.circular(30.r),
+                  bottomLeft: Radius.circular(30.r),
+                ),
         ),
-      ),
-      child: DefaultTabController(
-        length: 4,
-        child: Column(
-          children: [
-            TabBar(
-              dividerColor: Colors.transparent,
-              labelStyle: TextStyle(fontSize: 12.sp, fontFamily: 'Fredoka'),
-              tabs: const [
-                Tab(text: 'About',),
-                Tab(text: 'Base Stats'),
-                Tab(text: 'Evolution'),
-                Tab(text: 'Moves'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  AboutSection(pokemon: pokemon),
-                  BaseStatsSection(pokemon: pokemon),
-                  EvolutionSection(pokemon: pokemon),
-                  MovesSection(pokemon: pokemon)
+        child: DefaultTabController(
+          length: 4,
+          child: Column(
+            children: [
+              TabBar(
+                dividerColor: Colors.transparent,
+                labelStyle: TextStyle(
+                  fontSize: isPortrait ? 12.sp : 10.sp,
+                  fontFamily: 'Fredoka',
+                  fontWeight: FontWeight.bold,
+                ),
+                unselectedLabelStyle: TextStyle(
+                  fontSize: isPortrait ? 12.sp : 10.sp,
+                  fontFamily: 'Fredoka',
+                ),
+                tabs: const [
+                  Tab(text: 'About'),
+                  Tab(text: 'Base Stats'),
+                  Tab(text: 'Evolution'),
+                  Tab(text: 'Moves'),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    AboutSection(pokemon: pokemon),
+                    BaseStatsSection(pokemon: pokemon),
+                    EvolutionSection(pokemon: pokemon),
+                    MovesSection(pokemon: pokemon)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
