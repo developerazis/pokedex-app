@@ -30,12 +30,22 @@ class MovesSection extends StatelessWidget {
         itemBuilder: (context, index) {
           final move = pokemon.moves[index];
           return Container(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
             decoration: BoxDecoration(
               color: setBackgroundColor(pokemon.types.first),
               borderRadius: BorderRadius.circular(16.r)
             ),
             child: Center(
-              child: Text(move.titleCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+              child: FittedBox(
+                child: Text(
+                  move.titleCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
             ),
           );
         },

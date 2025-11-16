@@ -26,10 +26,11 @@ class PokemonInfoCard extends StatelessWidget {
         length: 4,
         child: Column(
           children: [
-            const TabBar(
+            TabBar(
               dividerColor: Colors.transparent,
-              tabs: [
-                Tab(text: 'About'),
+              labelStyle: TextStyle(fontSize: 12.sp, fontFamily: 'Fredoka'),
+              tabs: const [
+                Tab(text: 'About',),
                 Tab(text: 'Base Stats'),
                 Tab(text: 'Evolution'),
                 Tab(text: 'Moves'),

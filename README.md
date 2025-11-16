@@ -4,11 +4,21 @@ A simple Pokédex app built with Flutter that allows users to browse and discove
 
 ## Screenshots
 
-| Portrait | Landscape |
+### Portrait
+
+| | |
 | --- | --- |
-| ![Portrait](screenshot/img.png) | ![Landscape](screenshot/img_1.png) |
-| ![Detail Portrait](screenshot/img_2.png) | ![Detail Landscape](screenshot/img_3.png) |
-| ![Evolution Chain](screenshot/img_4.png) | |
+| ![Portrait 1](screenshot/potrait/img.png) | ![Portrait 2](screenshot/potrait/img_1.png) |
+| ![Portrait 3](screenshot/potrait/img_2.png) | ![Portrait 4](screenshot/potrait/img_3.png) |
+| ![Portrait 5](screenshot/potrait/img_4.png) | |
+
+### Landscape
+
+| | |
+| --- | --- |
+| ![Landscape 1](screenshot/landscape/img.png) | ![Landscape 2](screenshot/landscape/img_1.png) |
+| ![Landscape 3](screenshot/landscape/img_2.png) | ![Landscape 4](screenshot/landscape/img_3.png) |
+| ![Landscape 5](screenshot/landscape/img_4.png) | |
 
 ## Features
 

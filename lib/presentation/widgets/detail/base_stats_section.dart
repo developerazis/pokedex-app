@@ -71,11 +71,11 @@ class _StatBarState extends State<_StatBar> with SingleTickerProviderStateMixin 
       child: Row(
         children: [
           SizedBox(
-            width: 100,
+            width: 100.w,
             child: Text(widget.label, style: TextStyle(color: Colors.grey[600])),
           ),
           SizedBox(
-            width: 40,
+            width: 40.w,
             child: Text(
               widget.value.toString(),
               style: const TextStyle(fontWeight: FontWeight.w600),

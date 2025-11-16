@@ -110,8 +110,8 @@ class DetailView extends StatelessWidget {
                   child: Image.asset(
                     "assets/pokemon_ball.png",
                     fit: BoxFit.contain,
-                    width: 200.w,
-                    height: 200.h,
+                    width: 200.r,
+                    height: 200.r,
                     color: Colors.white.withOpacity(0.25),
                   ),
                 ),

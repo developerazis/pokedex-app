@@ -25,7 +25,14 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
-            fontFamily: 'Fredoka'
+            fontFamily: 'Fredoka',
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(fontSize: 14.sp),
+              bodyLarge: TextStyle(fontSize: 16.sp),
+              bodySmall: TextStyle(fontSize: 12.sp),
+              titleLarge: TextStyle(fontSize: 20.sp),
+              titleMedium: TextStyle(fontSize: 18.sp),
+            ),
           ),
           onGenerateRoute: AppRoutes.onGenerateRoute,
           initialRoute: AppRoutes.home,

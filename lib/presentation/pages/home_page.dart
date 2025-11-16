@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokeapp/core/di/injection.dart';
 import 'package:pokeapp/domain/entities/pokemon_entity.dart';
 import 'package:pokeapp/presentation/bloc/home_bloc.dart';
@@ -49,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokedex', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('Pokedex', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),),
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.transparent,
       ),
@@ -75,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
               Expanded(
                 child: GridView.builder(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.r),
                   controller: _scrollController,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

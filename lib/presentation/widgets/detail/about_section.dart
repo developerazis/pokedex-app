@@ -31,9 +31,9 @@ class AboutSection extends StatelessWidget {
                   label: 'Abilities',
                   value: pokemon.abilities.map((e) => e.titleCase()).join(', '),
                 ),
-                const SizedBox(height: 20),
-                const Text('Breeding',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                SizedBox(height: 20.h),
+                Text('Breeding',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                 _InfoRow(label: 'Gender', value: state.species.genderRatio),
                 _InfoRow(label: 'Egg Groups', value: state.species.eggGroups?.join(', ') ?? "-",
                 ),
@@ -64,13 +64,13 @@ class _InfoRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 100,
+            width: 100.w,
             child: Text(
               label,
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
             ),
           ),
-          Expanded(child: Text(value)),
+          Expanded(child: Text(value, style: TextStyle(fontSize: 14.sp),)),
         ],
       ),
     );
